@@ -1,14 +1,23 @@
 import { motion } from "framer-motion";
+import { useSearchParams } from "react-router-dom";
 import { Github, Search, LoaderCircle } from "lucide-react";
 
 interface HeroProps {
-    handleSearch: (e: React.FormEvent<HTMLFormElement>) => void;
-    username: string;
-    setUsername: (username: string) => void;
     isLoading: boolean;
 }
 
-export default function Hero({ handleSearch, username, setUsername, isLoading }: HeroProps) {
+export default function Hero({ isLoading }: HeroProps) {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const username = searchParams.get('username') || '';
+
+    const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const formData = new FormData(e.target as HTMLFormElement);
+        const username = formData.get('username') as string;
+        setSearchParams({ username });
+    };
+
+
     return (
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-gray-900 to-blue-900 opacity-50"></div>
@@ -59,8 +68,8 @@ export default function Hero({ handleSearch, username, setUsername, isLoading }:
               </div>
               <input
                 type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                name="username"
+                defaultValue={username}
                 placeholder="Entrez un nom d'utilisateur GitHub..."
                 className="w-full bg-transparent py-3 px-4 focus:outline-none text-white placeholder-gray-400"
               />
