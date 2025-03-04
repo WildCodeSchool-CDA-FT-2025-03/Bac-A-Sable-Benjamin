@@ -1,6 +1,7 @@
 import { Express } from 'express';
 import { readdirSync, existsSync } from 'fs';
 import path from 'path';
+import { pathToFileURL } from 'url';
 
 /**
  * Charge automatiquement tous les routeurs du dossier routes
@@ -17,7 +18,7 @@ export const loadRoutes = (app: Express, routesDir: string = './routes') => {
 
   const files = readdirSync(routesDir);
 
-  files.forEach((file: string) => {
+  files.forEach(async (file: string) => {
     if (!['.ts', '.js'].includes(path.extname(file))) {
       return;
     }
@@ -25,13 +26,13 @@ export const loadRoutes = (app: Express, routesDir: string = './routes') => {
     const filePath = path.join(routesDir, file);
 
     try {
-      const router = require(path.resolve(filePath)).default;
+      const router = await import(pathToFileURL(filePath).href);
       
       const routeName = path.basename(file, path.extname(file));
       
       const routePath = routeName === 'index' ? '/api' : `/api/${routeName}`;
       
-      app.use(routePath, router);
+      app.use(routePath, router.default);
       console.log(`Route chargée: ${routePath}`);
     } catch (error) {
       console.error(`Erreur lors du chargement de la route ${file}:`, error);
