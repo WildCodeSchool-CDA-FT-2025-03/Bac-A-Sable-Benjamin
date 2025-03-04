@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { loadRoutes } from './utils/loadRoutes';
+import { loadRoutes } from './utils/loadRoutes.js';
 import { config } from 'dotenv';
 import cors from 'cors';
 
@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: process.env.ALLOWED_ORIGINS?.split(','),
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
