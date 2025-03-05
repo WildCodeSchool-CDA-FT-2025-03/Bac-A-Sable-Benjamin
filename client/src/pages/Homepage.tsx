@@ -92,7 +92,6 @@ export default function Homepage() {
         const indexOfFirstRepo = indexOfLastRepo - reposPerPage;
         setPaginatedRepos(filteredRepos.slice(indexOfFirstRepo, indexOfLastRepo));
         
-        // If current page is out of bounds after filtering, reset to page 1
         const maxPage = Math.max(1, Math.ceil(filteredRepos.length / reposPerPage));
         if (currentPage > maxPage && maxPage > 0) {
             handlePageChange(1);
@@ -102,7 +101,6 @@ export default function Homepage() {
     const totalPages = Math.max(1, Math.ceil(filteredRepos.length / reposPerPage));
 
     const handlePageChange = (pageNumber: number) => {
-        // Update URL with new page
         const newParams = new URLSearchParams(searchParams);
         newParams.set('page', pageNumber.toString());
         setSearchParams(newParams);
