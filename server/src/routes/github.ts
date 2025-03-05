@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import axios from "axios";
+import { defaultCache } from "../services/cacheService";
 
 const router = Router();
 
@@ -15,12 +16,22 @@ if (process.env.GITHUB_TOKEN) {
 }
 
 async function getRepositoryLanguages(owner: string, repo: string) {
+  const cacheKey = `languages:${owner}/${repo}`;
+  
+  const cachedLanguages = defaultCache.get<any[]>(cacheKey);
+  if (cachedLanguages) {
+    return cachedLanguages;
+  }
+  
   try {
     const response = await githubAPI.get(`/repos/${owner}/${repo}/languages`);
     const languages = Object.entries(response.data).map(([name, size]) => ({
       node: { name },
       size: size as number
     }));
+    
+    defaultCache.set(cacheKey, languages);
+    
     return languages;
   } catch (error) {
     console.error(`Erreur lors de la récupération des langages pour ${owner}/${repo}:`, error);
@@ -30,6 +41,19 @@ async function getRepositoryLanguages(owner: string, repo: string) {
 
 router.get('/repos/:username', async (req: Request, res: Response): Promise<any> => {
   const { username } = req.params;
+  const forceRefresh = req.query.refresh === 'true';
+  
+  const cacheKey = `repos:${username}`;
+  
+  if (!forceRefresh) {
+    const cachedRepos = defaultCache.get(cacheKey);
+    if (cachedRepos) {
+      return res.status(200).json(cachedRepos);
+    }
+  } else {
+    defaultCache.invalidateByPrefix(`repos:${username}`);
+    defaultCache.invalidateByPrefix(`languages:${username}/`);
+  }
 
   try {
     const response = await githubAPI.get(`/users/${username}/repos`, {
@@ -59,12 +83,17 @@ router.get('/repos/:username', async (req: Request, res: Response): Promise<any>
 
     const repos = await Promise.all(reposPromises);
 
-    return res.status(200).json({
+    const result = {
       success: true,
       username,
       count: repos.length,
-      repos
-    });
+      repos,
+      fromCache: false
+    };
+
+    defaultCache.set(cacheKey, result);
+
+    return res.status(200).json(result);
   } catch (error: any) {
     console.error('Erreur lors de la récupération des dépôts:', error);
     
@@ -98,6 +127,51 @@ router.get('/repos/:username', async (req: Request, res: Response): Promise<any>
       details: error.message || 'Erreur inconnue'
     });
   }
+});
+
+router.delete('/cache', (req: Request, res: Response): any => {
+  if (process.env.NODE_ENV === 'production') {
+    return res.status(403).json({
+      success: false,
+      error: 'Non autorisé en production'
+    });
+  }
+  
+  const username = req.query.username as string;
+  
+  if (username) {
+    const deletedRepos = defaultCache.invalidateByPrefix(`repos:${username}`);
+    const deletedLanguages = defaultCache.invalidateByPrefix(`languages:${username}/`);
+    
+    return res.status(200).json({
+      success: true,
+      message: `Cache pour l'utilisateur ${username} a été vidé`,
+      details: {
+        deletedRepos,
+        deletedLanguages
+      }
+    });
+  } else {
+    defaultCache.clear();
+    return res.status(200).json({
+      success: true,
+      message: 'Tout le cache a été vidé'
+    });
+  }
+});
+
+router.get('/cache/stats', (req: Request, res: Response): any => {
+  if (process.env.NODE_ENV === 'production') {
+    return res.status(403).json({
+      success: false,
+      error: 'Non autorisé en production'
+    });
+  }
+  
+  return res.status(200).json({
+    success: true,
+    stats: defaultCache.getStats()
+  });
 });
 
 export default router;
