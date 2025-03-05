@@ -2,6 +2,12 @@
 
 Une application web élégante pour explorer les dépôts GitHub d'un utilisateur, avec des fonctionnalités de filtrage et de tri.
 
+## 🔗 Site en ligne
+
+Le projet est accessible en ligne sur **[https://github-repo-explorer.fr/](https://github-repo-explorer.fr/)**
+
+N'hésitez pas à visiter le site pour explorer les fonctionnalités de l'application.
+
 ## ✨ Fonctionnalités
 
 - 🔍 Recherche des dépôts par nom d'utilisateur
