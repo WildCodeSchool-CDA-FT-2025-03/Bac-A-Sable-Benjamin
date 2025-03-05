@@ -13,4 +13,4 @@ Disallow: /api/github/
 
 Crawl-delay: 10
 
-Sitemap: https://gre.thund.cloud/sitemap.xml
+Sitemap: https://github-repo-explorer.fr/sitemap.xml

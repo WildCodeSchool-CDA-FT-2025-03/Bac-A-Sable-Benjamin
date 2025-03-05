@@ -2,12 +2,61 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logo-white.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GitHub Repo Explorer</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>GitHub Repo Explorer | Explorez facilement les dépôts GitHub</title>
+    <meta name="description" content="Découvrez et explorez facilement les dépôts GitHub de n'importe quel utilisateur. Filtrez par type, triez par popularité et visualisez les détails techniques." />
+    <meta name="keywords" content="github, repository, explorer, dépôts, code, développeurs, open-source, programmation, API GitHub" />
+    <meta name="author" content="dilgo-dev" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://github-repo-explorer.fr" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/logo-white.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#111827" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://github-repo-explorer.fr" />
+    <meta property="og:title" content="GitHub Repo Explorer | Explorez facilement les dépôts GitHub" />
+    <meta property="og:description" content="Découvrez et explorez facilement les dépôts GitHub de n'importe quel utilisateur. Filtrez par type, triez par popularité et visualisez les détails techniques." />
+    <meta property="og:image" content="/logo-white.svg" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://github-repo-explorer.fr" />
+    <meta property="twitter:title" content="GitHub Repo Explorer | Explorez facilement les dépôts GitHub" />
+    <meta property="twitter:description" content="Découvrez et explorez facilement les dépôts GitHub de n'importe quel utilisateur. Filtrez par type, triez par popularité et visualisez les détails techniques." />
+    <meta property="twitter:image" content="/logo-white.svg" />
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "GitHub Repo Explorer",
+        "description": "Application pour explorer facilement les dépôts GitHub d'un utilisateur",
+        "url": "https://github-repo-explorer.fr",
+        "applicationCategory": "DeveloperApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "dilgo-dev"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>Vous devez activer JavaScript pour utiliser cette application.</noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
