@@ -21,7 +21,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu when route changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
@@ -39,7 +38,6 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-4">
-          {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <motion.div
               whileHover={{ rotate: 20 }}
@@ -57,7 +55,6 @@ export default function Navbar() {
             </motion.span>
           </Link>
 
-          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => (
               <Link
@@ -74,7 +71,7 @@ export default function Navbar() {
               </Link>
             ))}
             <a 
-              href="https://github.com"
+              href="https://github.com/WildCodeSchool-CDA-FT-2025-03/Bac-A-Sable-Benjamin"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center space-x-1 px-3 py-2 rounded-md text-gray-300 hover:bg-gray-800 hover:text-white transition-colors ml-2"
@@ -85,7 +82,6 @@ export default function Navbar() {
             </a>
           </nav>
 
-          {/* Mobile Menu Button */}
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden text-gray-300 hover:text-white focus:outline-none"
@@ -96,7 +92,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <motion.div 
           initial={{ opacity: 0, height: 0 }}
@@ -121,7 +116,7 @@ export default function Navbar() {
                 </Link>
               ))}
               <a 
-                href="https://github.com"
+                href="https://github.com/WildCodeSchool-CDA-FT-2025-03/Bac-A-Sable-Benjamin"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-3 px-4 py-3 rounded-md text-gray-300 hover:bg-gray-700 hover:text-white border-t border-gray-700 mt-2 pt-3"
