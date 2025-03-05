@@ -7,7 +7,6 @@ export default function NotFound() {
   const [count, setCount] = useState(10);
 
   useEffect(() => {
-    // Compte à rebours avant redirection
     if (count <= 0) {
       window.location.href = '/';
       return;
@@ -20,7 +19,6 @@ export default function NotFound() {
     return () => clearTimeout(timer);
   }, [count]);
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -132,7 +130,7 @@ export default function NotFound() {
             </Link>
             
             <a
-              href="https://github.com"
+              href="https://github.com/WildCodeSchool-CDA-FT-2025-03/Bac-A-Sable-Benjamin"
               target="_blank"
               rel="noopener noreferrer"
             >
