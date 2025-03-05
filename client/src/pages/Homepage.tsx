@@ -6,6 +6,7 @@ import Hero from '../components/homepage/Hero';
 import Cards from '../components/homepage/Cards';
 import Pagination from '../components/homepage/Pagination';
 import FilterSort from '../components/homepage/FilterSort';
+import EmptyState from '../components/homepage/EmptyState';
 
 export default function Homepage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -199,6 +200,10 @@ export default function Homepage() {
                             className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full"
                         />
                     </motion.div>
+                )}
+
+                {!username && !isLoading && (
+                    <EmptyState />
                 )}
                 
                 {userFound && totalRepos.length === 0 && !isLoading && (

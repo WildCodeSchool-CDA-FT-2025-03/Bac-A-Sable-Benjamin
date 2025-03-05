@@ -22,7 +22,7 @@ export default function Hero({ isLoading }: HeroProps) {
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-gray-900 to-blue-900 opacity-50"></div>
         
-        <div className="relative container mx-auto px-4 py-16">
+        <div className="relative container mx-auto px-4 py-28">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
